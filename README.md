@@ -50,6 +50,8 @@ For each group g, we then calculated the [number] and [amount] of transactions o
 For each group g, we also calculated the average daily [number] and [amount] of transactions over the past 7,14, and 30 days respectively.
 Then, we calculated the velocity change variables using the formula below:
 
+![Image of velocity](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/Velocity.png)
+
 In this step, we created 2 x 2 x 2 x 2 x 2 x 3 = 96 velocity change variables.
 
 Overall, we created 240 + 30 + 5 + 96 = 371 variables in total.
@@ -63,8 +65,24 @@ Next, with the newly created 371 variables, we performed feature selection on th
 ### Filter
 We calculated the KS and Fraud Detection Rate at 3% for each variable. Then we ranked them in descending order and selected the top 123 for further process.
 
+For Classification: The more separate the distributions (good and bad) are, the better this feature is.
+
+	Kolmogorov-Smirnov (KS)
+	Fisher Score
+	Pearson Correlation
+	Kulback-Leibler(KL=∫▒〖d_s p_1 log p_1/p_2 〗-∫▒〖d_s p_2 log p_1/p_2 〗=∫▒〖d_s (p_1-p_1)log p_1/p_2 〗)
+	Information Value
+	Mutual Information
+  
+KS you want it to be high. You rank it. 
+
+
 ### Wrapper
 we chose 123 variables to perform our next step of feature selection  In this step, we used the backward stepwise selection to screen out 20 variables as the input of our models, which are listed as the table below.
+
+•	Backward selection: Build a single model using all variables. Next build n models each removing one variable. Select the best model; it has n-1 variables. Then build n-1 separate models each removing one variable. Select the best model. Continue until the model degradation is below an acceptable amount.
+recursive feature elimination python (RFE)
+
 
 ### Embedded
 The last step in the feature selection is the embedded method, which includes 1) decision trees and 2) regularization.
@@ -75,4 +93,59 @@ On the other hand, regularization is adding a penalty term to the loss function 
 
 ## Model Algorithms
 
+### Model 1: Logistic Regression
+Logistic Regression can model a binary dependent variable. When doing Logistic Regression, we want to know that given X = [x1, x2, ..., xn]T, what is the probability of Y=1 happens. This method can be used in situations like predicting the probability of a sunny or cloudy weather tomorrow, given today’s weather and today’s temperature. Here, Xs are the weather and the temperature today, Y is the weather tomorrow, and 1 means sunny while 0 means not sunny (or cloudy). And the way of calculating such probability is by using the formula below.
+
+![Image of lr](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/Logistic%20Regression.png)
+
+In the formula above, x is a vector with n rows and one column, b is the coefficient vector with n rows and one column, x prim means the transposition of vector x. To estimate b in the Logistic Regression, we use Maximum Likelihood Estimation. After estimating b, when we have x and want to know the likelihood of Y=1 happening, we can plunge x in the formula above and get the probability of Y=1.
+
+Parameters:
+- C=1/lambda: Inverse of regularization strength; must be a positive float. Smaller values specify stronger regularization.
+- random_state: The seed of the pseudo random number generator to use when shuffling the data.
+
+### Model 2: Naïve Bayes
+Naïve Bayes is a classifier of machine learning based on Bayes’ theorem assuming naive independence between all variables. Unlike other machine learning models that try to predict Y given X, Naïve Bayes predicts, given Y, how likely the records display features of X. After building the model, we would be able to use Bayes theorem to calculate, given new X, the probability of Y being any class and choose the most likely predicted result. The following steps show how the model works.
+
+![Image of Naïve Bayes](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/Nai%CC%88ve%20Bayes.png)
+
+### Model 3: Random Forest
+Random Forest is a bagging technique for both classification and regression based on a decision tree. It solves Decision Tree’s problem of finding the right tree depth, as it reduces the variance by averaging multiple deep decision trees trained on different parts of the same training set. This comes at the expense of a small increase in the bias and some loss of interpretability, but Random Forest greatly boosts the performance in the final model generally.
+
+Parameters:
+
+- n_estimators: The number of trees in the forest. The more estimators usually mean a
+better performance. 500 or 1000 is usually sufficient.
+- max_features: The number of features to consider when looking for the best split.
+- max_depth: The maximum depth of the tree. Reduction of the maximum depth helps
+fight with overfitting. If nothing is given to this parameter, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples.
+
+### Model 4: Boosted Trees
+Boosted Decision Tree is a machine learning algorithm that produces a prediction model in the form of an ensemble of weak classifiers which are decision trees in this case. Given dataset (X(1) ,y(1)), ... ,(X(n), y(n)):
+
+• Initially assign every point equal weight;
+• Repeatfort=1,2,...:
+• Feed weighted dataset to the decision tree and get a weak classifier dt
+• Reweight the data to put more emphasis on points that dt gets wrong
+• Combine all the dt linearly
+
+Parameters:
+
+- learning rate: shrinks the contribution of each tree
+- number of estimators: the number of boosting stages to perform
+- criterion: the function to measure quality of a split
+
+### Model 5: Neural Nets
+
+Neural Net is a mathematical function mapping inputs to an output with a set of adjustable parameters. A typical neural net consists of an input layer, number of hidden layers and an output layer. An input layer has all the independent variables. An output layer refers to the dependent variable. The hidden layer contains a set of nodes. Each node in each hidden layer contains a linear combination of all the nodes in the previous layer and does a transform on this linear combination. The transform function can be a logistic function, a step function, a linear function, etc.
+
+Parameters:
+
+- number of inputs: independent variables in the dataset
+- number of hidden layers: it depends on different situations
+- number of nodes in each hidden layer: it depends on different situations
+- transform function: a logistic function, a step function, a linear function, etc.
+- learning rate: a hyper-parameter that controls how much we are adjusting the weights of our model with respect the loss gradient.
+
+In total, we tried five neural networks and it turned out that the model with three hidden layers and 128 neurons within each had the best performance. The first two hidden layers used ‘tanh’ as activation function and the third used ‘relu’.
 
