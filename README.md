@@ -149,3 +149,17 @@ Parameters:
 
 In total, we tried five neural networks and it turned out that the model with three hidden layers and 128 neurons within each had the best performance. The first two hidden layers used ‘tanh’ as activation function and the third used ‘relu’.
 
+### performance
+
+![Image of performance](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/performance.png)
+
+## Results
+According to the above table demonstrating a high-level overview of all five models’ FDRs at 3% in training, testing and out-of-time dataset, both random forest and boosted tree performed well on the training set; boosted tree did better in the testing set while random forest did better in out-of-time set. In the end, we chose the boosted tree as our final model. Using top 3% of the population with highest predictions, the boosted tree model achieved a 100% fraud detection rate on the training set, 88% on testing, and 37% on out-of-time dataset, respectively.
+We also generated three tables that showcase the final model performance in training, testing and out of time datasets separately. In each of them, we collected their bin statistics and cumulative statistics according to the population bin.
+
+
+## Fraud Savings Calculation:
+
+We created the graph below to show our fraud algorithm savings. We assumed that we could gain $2000 for every true fraud we caught (blue curve) and lose $50 for every inaccurately identified fraud (red curve). Then, the overall savings (grey curve) is equal to fraud savings minus lost sales. Since we would like to save as much money as possible, as demonstrated below, the overall saving reached the highest point of $140,550 when targeting the top 14% of population with highest predictions. Therefore, we recommend that the client set a cutoff point at 14%.
+
+![Image of fsc](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/Fraud%20Savings%20Calculation.png)
