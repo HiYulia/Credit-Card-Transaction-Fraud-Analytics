@@ -163,3 +163,5 @@ We also generated three tables that showcase the final model performance in trai
 We created the graph below to show our fraud algorithm savings. We assumed that we could gain $2000 for every true fraud we caught (blue curve) and lose $50 for every inaccurately identified fraud (red curve). Then, the overall savings (grey curve) is equal to fraud savings minus lost sales. Since we would like to save as much money as possible, as demonstrated below, the overall saving reached the highest point of $140,550 when targeting the top 14% of population with highest predictions. Therefore, we recommend that the client set a cutoff point at 14%.
 
 ![Image of fsc](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/Fraud%20Savings%20Calculation.png)
+## cros validation3
+## out of time and test side
