@@ -31,6 +31,7 @@ Based on the results above, for each group g, we then calculated the [actual/ave
 
 In this step, we created 5 x 8 x 6 = 240 amount variables.
 
+
 b. Frequency variables
 
 Same as above, we grouped all the records respectively by Cardnum, Merchnum, [Cardnum & Merchnum], [Cardnum & Merch zip], [Card & Merch state].
@@ -163,5 +164,34 @@ We also generated three tables that showcase the final model performance in trai
 We created the graph below to show our fraud algorithm savings. We assumed that we could gain $2000 for every true fraud we caught (blue curve) and lose $50 for every inaccurately identified fraud (red curve). Then, the overall savings (grey curve) is equal to fraud savings minus lost sales. Since we would like to save as much money as possible, as demonstrated below, the overall saving reached the highest point of $140,550 when targeting the top 14% of population with highest predictions. Therefore, we recommend that the client set a cutoff point at 14%.
 
 ![Image of fsc](https://github.com/xinyueniu/Credit-Card-Transaction-Fraud-Analytics/blob/master/Fraud%20Savings%20Calculation.png)
-## cros validation3
+## cross validation
+
+1.Train_Test Split approach.
+
+2. K-Folds Cross Validation:
+K-Fold is a popular and easy to understand, it generally results in a less biased model compare to other methods.
+Because it ensures that every observation from the original dataset has the chance of appearing in training and test set. This is one among the best approach if we have a limited input data. This method follows the below steps.
+
+Validation help us evaluate the quality of the model
+Validation help us select the model which will perform best on unseen data
+Validation help us to avoid overfitting and underfitting.
+
+3. Leave one out : # groups = len(train)
+
+This method can be useful if we have too little data and fast enough model to retrain.
+
+4.Stratification
+
+Usually, when we use train/test split, Kfold we shuffle the data trying to reproduce random train validation split. In that case, it is possible different target distribution to be applied to different folds. With stratification we achieve similar target distribution over different folds when we split the data.
+
+It is useful for:
+Small datasets
+Unbalanced datasets
+Multiclass classification
+
+General, for a balanced big dataset, stratification split will be quite similar to a simple shuffle (random) split.
+
 ## out of time and test side
+-Training Dataset: The sample of data used to fit the model.
+-Testing Dataset: The sample of data used to provide an unbiased evaluation of a model fit on the training dataset while tuning model hyperparameters. The evaluation becomes more biased as skill on the TEST dataset is incorporated into the model configuration.
+-OOT Dataset: The sample of data used to provide an unbiased evaluation of a final model fit on the training dataset.
