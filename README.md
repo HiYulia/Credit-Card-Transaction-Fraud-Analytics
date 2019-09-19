@@ -192,6 +192,8 @@ Multiclass classification
 General, for a balanced big dataset, stratification split will be quite similar to a simple shuffle (random) split.
 
 ## out of time and test side
--Training Dataset: The sample of data used to fit the model.
--Testing Dataset: The sample of data used to provide an unbiased evaluation of a model fit on the training dataset while tuning model hyperparameters. The evaluation becomes more biased as skill on the TEST dataset is incorporated into the model configuration.
--OOT Dataset: The sample of data used to provide an unbiased evaluation of a final model fit on the training dataset.
+1.Training Dataset: The sample of data used to fit the model.
+
+2.Testing Dataset: The sample of data used to provide an unbiased evaluation of a model fit on the training dataset while tuning model hyperparameters. The evaluation becomes more biased as skill on the TEST dataset is incorporated into the model configuration.
+
+3.OOT Dataset: The sample of data used to provide an unbiased evaluation of a final model fit on the training dataset.
